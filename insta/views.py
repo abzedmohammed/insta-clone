@@ -16,6 +16,17 @@ from django.core.mail import send_mail
 def index(request):
     return render(request, 'index.html')
 
+def add_image(request):
+    if request.method == "POST":
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        else:
+            return False
+    
+    return render(request, 'add_image.html', {'form':ImageForm,})
+
 def search_results(request):
     
     if 'article' in request.GET and request.GET["article"]:

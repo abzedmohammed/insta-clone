@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from .models import *
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
@@ -8,7 +9,11 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
         
-'''   
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ('image', 'name', 'caption')
+         
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -34,9 +39,9 @@ class ProfileForm(forms.ModelForm):
                     'GIF or PNG image.')
 
             #validate file size
-            if len(avatar) > (5242880):
+            if len(avatar) > (2621440):
                 raise forms.ValidationError(
-                    u'Avatar file size may not exceed 5mb.')
+                    u'Avatar file size may not exceed 2.5mb.')
 
         except AttributeError:
             """
@@ -46,4 +51,3 @@ class ProfileForm(forms.ModelForm):
             pass
 
         return avatar
-'''

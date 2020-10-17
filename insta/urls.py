@@ -9,6 +9,7 @@ urlpatterns=[
     path('search/', views.search_results, name='search_results'),
     path('logout/', views.logout, name='logout'),
     path('accounts/login', views.login, name='login'),
+    path('add_image/', views.add_image, name='addImage'),
 ]
 
 if settings.DEBUG:
