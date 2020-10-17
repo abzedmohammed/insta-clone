@@ -19,6 +19,7 @@ class Profile(models.Model):
     
     
 class Image(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     image = CloudinaryField('image')
     name = models.CharField(max_length=120, null=True)
     caption = models.CharField(max_length=120, null=True)
