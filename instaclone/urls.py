@@ -23,7 +23,4 @@ urlpatterns = [
     path('avatar/',include('avatar.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),
-    path('accounts/register/',
-        RegistrationView.as_view(success_url='/'),
-        name='django_registration_register'),
 ]

@@ -6,8 +6,12 @@ from .models import *
 from .forms import *
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
+from django.conf import settings 
+from django.core.mail import send_mail 
+
 
 def index(request):
     return render(request, 'index.html')
@@ -25,21 +29,27 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-news/search.html',{"message":message})
 
-@login_required
-def welcome_email(request):
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            name = self.cleaned_data['username']
-            email = self.cleaned_data['email']
-            recipient = SignupForm(name = name,email =email)
-            recipient.save()
-            send_welcome_email(name,email)
-            HttpResponseRedirect('index')
-    else:
-        form = SignupForm()
+# def welcome_email(request):
+#     if request.method == 'POST':
+#         username = request.POST('username')
+#         password = request.POST('password')
+#         email = request.POST('email')
+#         user = User.objects.create_user(
+#             username = username,
+#             email = email,
+#             password = password,
+#         )
         
-    return render(request, 'django_registration/registration_form.html', {"form":form})
+#         login(request, user)
+        
+#         subject = 'welcome to Insta Clone'
+#         message = f'Hi {user.username}, thank you for registering in Insta Clone. Enjoy the app..'
+#         email_from = settings.EMAIL_HOST_USER 
+#         recipient_list = [user.email] 
+#         send_mail( subject, message, email_from, recipient_list ) 
+
+#         return redirect('/')
+#     return render(request, 'django_registration/registration_form.html', {'form': form})
 
 def login(request):
     username = request.POST['username']
