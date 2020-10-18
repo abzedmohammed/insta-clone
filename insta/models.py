@@ -28,10 +28,13 @@ class Post(models.Model):
     image_name = models.CharField(max_length=120, null=True)
     description = models.TextField(null=True)
     caption = models.TextField(max_length=120, null=True)
-    date = timezone.now()
+    date = models.DateTimeField(auto_now_add=True)
    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    like = models.ManyToManyField(User, blank=True, related_name = 'image_like')
+    like = models.IntegerField(default=0)
     comment = models.TextField(null=True)
+    
+    # class Meta:
+    #     ordering = ['-date',]
     
     def __str__(self):
         return self.caption
