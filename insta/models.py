@@ -24,9 +24,9 @@ class Profile(models.Model):
     
 class Post(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
-    text : models.TextField(null=True)
-    image = CloudinaryField('image')
+    image = models.ImageField(blank=True, null=True)
     image_name = models.CharField(max_length=120, null=True)
+    description = models.TextField(null=True)
     caption = models.TextField(max_length=120, null=True)
     date = timezone.now()
    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
