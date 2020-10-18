@@ -11,10 +11,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.conf import settings 
 from django.core.mail import send_mail 
-from django_currentuser.middleware import (
-    get_current_user, get_current_authenticated_user)
 
-
+@login_required
 def index(request):
     user = request.user
     stream = Stream.objects.filter(user=user)
@@ -23,17 +21,36 @@ def index(request):
     group_ids = []
     
     for items in stream:
-        group_ids.append(items.items_id)
+        group_ids.append(items.post_id)
         
     post_items = Post.objects.filter(id__in=group_ids).all().order_by('-date')
     
     return render(request, 'index.html', {'posts':posts, 'stream':stream,'post_items':post_items})
 
+@login_required
+def timeline(request):
+    user = request.user
+    stream = Stream.objects.filter(user=user)
+    posts = Post.objects.all().filter(date__lte=timezone.now()).order_by('-date')
+    
+    group_ids = []
+    
+    for items in stream:
+        group_ids.append(items.post_id)
+        
+    post_items = Post.objects.filter(id__in=group_ids).all().order_by('-date')
+    
+    return render(request, 'index.html', {'posts':posts, 'stream':stream,'post_items':post_items})
+
+@login_required
 def add_image(request):
+    user = request.user
     if request.method == "POST":
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            data = form.save(commit=False)
+            data.user = user
+            data.save()
             return redirect('/')
         else:
             return False

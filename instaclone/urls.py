@@ -20,6 +20,7 @@ from django_registration.backends.one_step.views import RegistrationView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('insta.urls')),
+  #  path('user/',include('authy.urls')),
     path('avatar/',include('avatar.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),

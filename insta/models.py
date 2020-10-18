@@ -1,9 +1,9 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
-from django_currentuser.db.models import CurrentUserField
 from django.utils import timezone
 from django.db.models.signals import post_save
+import uuid
 
 def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
@@ -28,6 +28,7 @@ class Profile(models.Model):
     
     
 class Post(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
     image_name = models.CharField(max_length=120, null=True)
@@ -35,7 +36,7 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     like = models.IntegerField(default=0)
-    comment = models.TextField(null=True)
+   # comment = models.TextField(null=True)
     
     # class Meta:
     #     ordering = ['-date',]

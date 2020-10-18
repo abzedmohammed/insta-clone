@@ -10,6 +10,7 @@ urlpatterns=[
     path('logout/', views.logout, name='logout'),
     path('accounts/login', views.login, name='login'),
     path('add_image/', views.add_image, name='addImage'),
+    path('my_timeline/', views.timeline, name='timeline'),
 ]
 
 if settings.DEBUG:

@@ -12,7 +12,7 @@ class SignupForm(UserCreationForm):
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ['comment','like','profile']
+        fields = ('image', 'image_name', 'caption')
          
 class ProfileForm(forms.ModelForm):
     class Meta:
