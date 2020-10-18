@@ -1,5 +1,11 @@
-{%extends 'base.html'%}
-{% load bootstrap4 %}
+{%include 'base.html'%}
+{% load static %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">  
+{% endblock  %}
+  
 
 {% block content %} 
 
@@ -7,9 +13,10 @@
 
   <h1 style="text-decoration: underline;">Insta Clone</h1>
 
-  <div class="row">
     {% for items in posts %}
     <!-- displaying News articles -->
+    <div class="row">
+
     <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
       <!-- Card Dark -->
    <div class="card">
@@ -66,16 +73,17 @@
   </div>
 
 </div>
-</div>  
+</div> 
+</div>
+<br>
 {% empty %}
 <h2 class="text-center" style="text-decoration: underline;">There's No News Items</h2>
+
 {% endfor %}
 <br>
-</div>
 <br>
  
 </div>
 
-</div>      
   {% endblock %}
       
