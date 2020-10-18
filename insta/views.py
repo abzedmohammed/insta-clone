@@ -11,10 +11,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.conf import settings 
 from django.core.mail import send_mail 
+from django_currentuser.middleware import (
+    get_current_user, get_current_authenticated_user)
 
 
 def index(request):
-    return render(request, 'index.html')
+    posts = Image.objects.all()
+    return render(request, 'index.html', {'posts':posts})
 
 def add_image(request):
     if request.method == "POST":

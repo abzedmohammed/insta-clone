@@ -7,6 +7,49 @@
 
   <h1 style="text-decoration: underline;">Insta Clone</h1>
 
+  <div class="row">
+    {% for items in posts %}
+    <!-- displaying News articles -->
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+      <!-- Card Dark -->
+   <div class="card">
+
+  <!-- Card image -->
+  <div class="view overlay">
+    <img class="card-img-top img-fluid" src="{{items.image.url}}" alt="Card image">
+    <a>
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+
+  <!-- Card content -->
+  <div class="card-body elegant-color white-text rounded-bottom">
+
+    <!-- Social shares button -->
+    <a class="activator waves-effect mr-4"><i class="fas fa-share-alt white-text"></i></a>
+    <!-- Title -->
+    <h4 class="card-title"> {{ items.user }} </h4>
+    <hr class="hr-light">
+    <!-- Text -->
+    <div class="card-text white-text mb-4">{{ items.profile.bio }}</div>
+    <!-- Link -->
+    <a href="/article/{{news_item.id}}" class="white-text d-flex justify-content-end">
+      <h5>Read more <i class="fas fa-angle-double-right"></i></h5>
+    </a>
+
+  </div>
+
+</div>
+</div>  
+{% empty %}
+<h2 class="text-center" style="text-decoration: underline;">There's No News Items</h2>
+{% endfor %}
+<br>
+</div>
+<br>
+ 
+</div>
+
 </div>      
   {% endblock %}
       
