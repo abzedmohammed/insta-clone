@@ -12,7 +12,7 @@ a{
     padding: 10px;
 }
 
-.profile_image{
+.profile_image img{
     display: inline;
     height: 30px;
     width: 30px;
@@ -105,10 +105,15 @@ a{
     text-transform: capitalize;
 }
 
-.overlay{
-    max-width: 100%;
+.jumbotron{
+    width: 85%%;
+    height: 550px;
+}
+
+.view img{
+    width: 70%;
+    height: 290px;
     object-fit: cover;
-    height: 500px;
 }
 
 
