@@ -28,7 +28,7 @@ class Profile(models.Model):
     
     
 class Post(models.Model):
-    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
     image_name = models.CharField(max_length=120, null=True)
     caption = models.TextField(max_length=1000, verbose_name='Caption', null=True)
@@ -66,7 +66,7 @@ class Stream(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_following')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     
     def add_post(sender,instance,*args,**kwargs):
         post = instance
@@ -74,7 +74,7 @@ class Stream(models.Model):
         followers = Follow.objects.all().filter(following=user)
         
         for follower in followers:
-            stream = Stream(post=post, user=follower.follower, date=post.posted, following=user)
+            stream = Stream(post=post, user=follower.follower, date=post.date, following=user)
             stream.save()
             
 post_save.connect(Stream.add_post, sender=Post)

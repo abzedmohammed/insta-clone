@@ -16,8 +16,18 @@ from django_currentuser.middleware import (
 
 
 def index(request):
+    user = request.user
+    stream = Stream.objects.filter(user=user)
     posts = Post.objects.all().filter(date__lte=timezone.now()).order_by('-date')
-    return render(request, 'index.html', {'posts':posts})
+    
+    group_ids = []
+    
+    for items in stream:
+        group_ids.append(items.items_id)
+        
+    post_items = Post.objects.filter(id__in=group_ids).all().order_by('-date')
+    
+    return render(request, 'index.html', {'posts':posts, 'stream':stream,'post_items':post_items})
 
 def add_image(request):
     if request.method == "POST":

@@ -13,7 +13,7 @@
 
   <h1 style="text-decoration: underline;">Insta Clone</h1>
 
-    {% for items in posts %}
+    {% for items in post_items %}
     <!-- displaying News articles -->
     <div class="row">
 
@@ -45,7 +45,7 @@
   </div>
 
   <div class="likes">
-    <a href="">300</a>
+    <a href="">{{ items.like }} Likes</a>
   </div>
 
   <div class="caption">
@@ -77,7 +77,7 @@
 </div>
 <br>
 {% empty %}
-<h2 class="text-center" style="text-decoration: underline;">There's No News Items</h2>
+<h2 class="text-center" style="text-decoration: underline;">No Posts Available</h2>
 
 {% endfor %}
 <br>
