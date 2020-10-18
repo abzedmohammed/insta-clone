@@ -16,7 +16,7 @@ from django_currentuser.middleware import (
 
 
 def index(request):
-    posts = Image.objects.all()
+    posts = Post.objects.all()
     return render(request, 'index.html', {'posts':posts})
 
 def add_image(request):
