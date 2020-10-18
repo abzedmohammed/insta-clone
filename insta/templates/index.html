@@ -31,12 +31,12 @@
     </a>
   </div>
 
-  <h5 class="indigo-text h5 mt-3">Image Name</h5>
+  <h5 class="indigo-text h5 mt-3">{{ items.image_name }}</h5>
 
-  <p class="card-text">{{ items.caption| truncate(17) }}</p>
+  <p class="card-text">{{ items.caption| truncatechars:17 }}</p>
 
   <!-- Linkedin -->
-  <a class="fa-lg p-2 li-ic"><i class="fas fa-thumbs-up">  <span class="text-muted">200</span></i></a>
+  <a class="fa-lg p-2 li-ic"><i class="fas fa-thumbs-up">  <span class="text-muted">{{ items.like }}</span></i></a>
   <!-- Twitter -->
   <a class="fa-lg p-2 m-2 tw-ic"><i class="fas fa-comment-dots">  <span class="text-muted">Comment</span></i></a>
   <!-- Dribbble -->
@@ -48,68 +48,11 @@
 <hr>
 <br>
 {% empty %}
-<!-- Jumbotron -->
-
-    {% for items in posts %}
-    <!-- displaying News articles -->
-    <div class="row">
-
-    <div class="col-xs-10 col-sm-10 col-md-11 col-lg-10">
-      <!-- Card Dark -->
-   <div class="card">
-     <div class="card_header">
-       <div class="profile_image"><img class="img-fluid rounded-circle" src="{{ items.post.url }}" alt="{{ items.user }} profile image"></div>
-
-         <div class="post_info">
-           <div class="post_name"> {{ items.user }}</div>
-             <div class="post_location">{% localtime on %}{{ items.date }}{% endlocaltime %}</div>
-             </div>
-             <div class="post_options"><i class="fas fa-ellipsis-h"></i></div>
-           </div>
-
-  <!-- Card image -->
-  <div class="view overlay">
-    <img class="card-img-top img-fluid" src="{{items.image.url}}" alt="Card image">
-    <a>
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  </div>
-
-  <div class="caption">
-    <a class="text-muted" href=""><h5>@{{ items.user }}</h5></a>
-    <span><p>{{ items.caption }}</p></span>
-  </div>
-
-  <div class="time_posted">Posted {{ items.date| timesince }} ago</div>
-
-  <!-- Card content -->
-  <div class="card-body elegant-color white-text rounded-bottom">
-    <!-- Title -->
-    <h4 class="card-title"> {{ items.user }} </h4>
-    <hr class="hr-light">
-    <!-- Text -->
-    <div class="card-text white-text">
-      <div class="engagement">
-        <a href=""><i class="fas fa-thumbs-up"></i></a>
-        <a href=""><i class="fas fa-comment-dots"></i></a>
-        <a href=""><i class="fas fa-share-alt"></i></a>
-      </div>
-    </div>
-    <!-- Link -->
-    <a href="/article/{{news_item.id}}" class="white-text d-flex justify-content-end">
-      <h5>Read more <i class="fas fa-angle-double-right"></i></h5>
-    </a>
-
-  </div>
-
-</div>
-</div> 
-</div>
-<br>
-{% empty %}
 <h2 class="text-center" style="text-decoration: underline;">No Posts Available</h2>
 
 {% endfor %}
+<!-- Jumbotron -->
+
 <br>
 <br>
  
