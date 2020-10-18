@@ -26,15 +26,15 @@ class Post(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     text : models.TextField(null=True)
     image = CloudinaryField('image')
-    name = models.CharField(max_length=120, null=True)
+    image_name = models.CharField(max_length=120, null=True)
     caption = models.TextField(max_length=120, null=True)
-    date = models.DateTimeField(timezone.now)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    date = timezone.now()
+   # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     like = models.ManyToManyField(User, blank=True, related_name = 'image_like')
     comment = models.TextField(null=True)
     
     def __str__(self):
-        return self.name
+        return self.caption
     
     def save_image(self):
         self.save()
