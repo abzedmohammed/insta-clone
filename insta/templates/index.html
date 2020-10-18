@@ -1,5 +1,6 @@
 {%include 'base.html'%}
 {% load static %}
+{% load tz %}
 
 
 {% block styles %}
@@ -13,11 +14,11 @@
 
   <h1 style="text-decoration: underline;">Insta Clone</h1>
 
-    {% for items in post_items %}
+    {% for items in posts %}
     <!-- displaying News articles -->
     <div class="row">
 
-    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+    <div class="col-xs-10 col-sm-10 col-md-11 col-lg-10">
       <!-- Card Dark -->
    <div class="card">
      <div class="card_header">
@@ -25,7 +26,7 @@
 
          <div class="post_info">
            <div class="post_name"> {{ items.user }}</div>
-             <div class="post_location">Malindi</div>
+             <div class="post_location">{% localtime on %}{{ items.date }}{% endlocaltime %}</div>
              </div>
              <div class="post_options"><i class="fas fa-ellipsis-h"></i></div>
            </div>
@@ -38,16 +39,6 @@
     </a>
   </div>
 
-  <div class="engagement">
-    <a href=""><i class="fas fa-comment-dots"></i></a>
-    <a href=""><i class="fas fa-thumbs-up"></i></a>
-    <a href=""><i class="fas fa-share-alt"></i></a>
-  </div>
-
-  <div class="likes">
-    <a href="">{{ items.like }} Likes</a>
-  </div>
-
   <div class="caption">
     <a class="text-muted" href=""><h5>@{{ items.user }}</h5></a>
     <span><p>{{ items.caption }}</p></span>
@@ -57,14 +48,17 @@
 
   <!-- Card content -->
   <div class="card-body elegant-color white-text rounded-bottom">
-
-    <!-- Social shares button -->
-    <a class="activator waves-effect mr-4"><i class="fas fa-share-alt white-text"></i></a>
     <!-- Title -->
     <h4 class="card-title"> {{ items.user }} </h4>
     <hr class="hr-light">
     <!-- Text -->
-    <div class="card-text white-text mb-4">{{ items.profile.bio }}</div>
+    <div class="card-text white-text">
+      <div class="engagement">
+        <a href=""><i class="fas fa-thumbs-up"></i></a>
+        <a href=""><i class="fas fa-comment-dots"></i></a>
+        <a href=""><i class="fas fa-share-alt"></i></a>
+      </div>
+    </div>
     <!-- Link -->
     <a href="/article/{{news_item.id}}" class="white-text d-flex justify-content-end">
       <h5>Read more <i class="fas fa-angle-double-right"></i></h5>

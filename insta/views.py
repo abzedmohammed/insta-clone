@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.http  import HttpResponse
 import datetime as dt
 from django.http import HttpResponse, Http404,HttpResponseRedirect
@@ -14,18 +14,9 @@ from django.core.mail import send_mail
 
 @login_required
 def index(request):
-    user = request.user
-    stream = Stream.objects.filter(user=user)
     posts = Post.objects.all().filter(date__lte=timezone.now()).order_by('-date')
     
-    group_ids = []
-    
-    for items in stream:
-        group_ids.append(items.post_id)
-        
-    post_items = Post.objects.filter(id__in=group_ids).all().order_by('-date')
-    
-    return render(request, 'index.html', {'posts':posts, 'stream':stream,'post_items':post_items})
+    return render(request, 'index.html', {'posts':posts})
 
 @login_required
 def timeline(request):
@@ -40,7 +31,12 @@ def timeline(request):
         
     post_items = Post.objects.filter(id__in=group_ids).all().order_by('-date')
     
-    return render(request, 'index.html', {'posts':posts, 'stream':stream,'post_items':post_items})
+    return render(request, 'timeline.html', {'posts':posts, 'stream':stream,'post_items':post_items})
+
+@login_required
+def single_post(request,post_id):
+    post = get_object_or_404(Post, id=post_id)
+    return render(request, 'single_post.html', {'post':post})    
 
 @login_required
 def add_image(request):

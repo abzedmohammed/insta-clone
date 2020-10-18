@@ -11,14 +11,17 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/">Home
+        <a class="nav-link" href="/">
+          <i class="fas fa-home"></i> Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fas fa-users">  Follow</i>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="#">
+          <i class="far fa-newspaper">  Subscribe</i></a>
       </li>
     </ul>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
@@ -30,8 +33,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fas fa-list"></i> Wishlist</a>
+          <a class="nav-link" href="{% url 'timeline' %}">
+            <i class="fas fa-list"></i> My Timeline</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"

@@ -1,80 +1,90 @@
 {%include 'base.html'%}
-{% load static %}
-
-
-{% block styles %}
-<link rel="stylesheet" href="{% static 'css/main.css' %}">  
-{% endblock  %}
-  
+{% load tz %}  
 
 {% block content %} 
 
 <div class="container">
 
-  <h1 style="text-decoration: underline;">Insta Clone</h1>
+  <h1 style="text-decoration: underline;">My Timeline...</h1>
+
+  <br>
 
     {% for items in post_items %}
     <!-- displaying News articles -->
     <div class="row">
 
-    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-      <!-- Card Dark -->
-   <div class="card">
-     <div class="card_header">
-       <div class="profile_image"><img class="img-fluid rounded-circle" src="{{ items.post.url }}" alt="{{ items.user }} profile image"></div>
+    <div class="col-xs-9 col-sm-10 col-md-9 col-lg-10">
 
-         <div class="post_info">
-           <div class="post_name"> {{ items.user }}</div>
-             <div class="post_location">Malindi</div>
-             </div>
-             <div class="post_options"><i class="fas fa-ellipsis-h"></i></div>
-           </div>
+        <!-- News jumbotron -->
+<div class="text-center hoverable p-4">
 
-  <!-- Card image -->
-  <div class="view overlay">
-    <img class="card-img-top img-fluid" src="{{items.image.url}}" alt="Card image">
-    <a>
-      <div class="mask rgba-white-slight"></div>
-    </a>
+    <!-- Grid row -->
+    <div class="row">
+  
+      <!-- Grid column -->
+      <div class="col-md-4 offset-md-1 mx-3 my-3">
+  
+        <!-- Featured image -->
+        <div class="view overlay">
+          <img src="{{ items.image.url }}" class="img-fluid z-depth-1 img-thumbnail hoverable" alt="{{ items.user}} Avatar">
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+  
+      </div>
+      <!-- Grid column -->
+  
+      <!-- Grid column -->
+      <div class="col-md-7 text-md-left ml-3 mt-3">
+  
+        <!-- Excerpt -->
+  
+        <h4 class="h4 mb-4">{{ items.image_name }}</h4>
+  
+        <p class="font-weight-normal">{{ items.caption }}</p>
+        <p class="font-weight-normal">by <a><strong>{{ items.user }}</strong></a>,<br> on <small>{% localtime on %}{{ items.date }}{% endlocaltime %}</small></p>
+
+        <div class="rounded-bottom pt-3">
+            <ul class="list-unstyled list-inline font-small">
+
+                <li class="list-inline-item pr-2">
+                    <a href="#!" class="green-text"> 
+                        <h6 class="h6 pb-1"><i class="far fa-heart"></i> {{ items.like }}</h6>
+                      </a>
+                </li>
+
+                <li class="list-inline-item pr-2">
+                    <a href="#!" class="green-text"> 
+                        <h6 class="h6 pb-1"><i class="fas fa-comment-dots"></i> Comment</h6>
+                      </a>            
+                </li>
+
+                <li class="list-inline-item pr-2">
+                    <a href="#!" class="green-text"> 
+                        <h6 class="h6 pb-1"><i class="fas fa-share-alt"> Share</i></h6>
+                      </a>
+              
+                </li>
+
+                </ul>
+
+        </div>
+  
+        <a class="btn btn-sm btn-dark">Full Post</a>
+  
+      </div>
+    </div>
+      <!-- Grid column -->
+  
+    </div>
+    <!-- Grid row -->
+  
   </div>
+  <!-- News jumbotron -->
 
-  <div class="engagement">
-    <a href=""><i class="fas fa-comment-dots"></i></a>
-    <a href=""><i class="fas fa-thumbs-up"></i></a>
-    <a href=""><i class="fas fa-share-alt"></i></a>
-  </div>
-
-  <div class="likes">
-    <a href="">{{ items.like }} Likes</a>
-  </div>
-
-  <div class="caption">
-    <a class="text-muted" href=""><h5>@{{ items.user }}</h5></a>
-    <span><p>{{ items.caption }}</p></span>
-  </div>
-
-  <div class="time_posted">Posted {{ items.date| timesince }} ago</div>
-
-  <!-- Card content -->
-  <div class="card-body elegant-color white-text rounded-bottom">
-
-    <!-- Social shares button -->
-    <a class="activator waves-effect mr-4"><i class="fas fa-share-alt white-text"></i></a>
-    <!-- Title -->
-    <h4 class="card-title"> {{ items.user }} </h4>
-    <hr class="hr-light">
-    <!-- Text -->
-    <div class="card-text white-text mb-4">{{ items.profile.bio }}</div>
-    <!-- Link -->
-    <a href="/article/{{news_item.id}}" class="white-text d-flex justify-content-end">
-      <h5>Read more <i class="fas fa-angle-double-right"></i></h5>
-    </a>
-
-  </div>
-
-</div>
 </div> 
-</div>
+<hr style="color: #111;">
 <br>
 {% empty %}
 <h2 class="text-center" style="text-decoration: underline;">No Posts Available</h2>

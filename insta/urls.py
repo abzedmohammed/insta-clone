@@ -11,6 +11,7 @@ urlpatterns=[
     path('accounts/login', views.login, name='login'),
     path('add_image/', views.add_image, name='addImage'),
     path('my_timeline/', views.timeline, name='timeline'),
+    path('<uuid:post_id>', views.single_post, name='singlePost'),
 ]
 
 if settings.DEBUG:
