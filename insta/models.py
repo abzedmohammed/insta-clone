@@ -2,9 +2,9 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django_currentuser.db.models import CurrentUserField
+from django.utils import timezone
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=120, null=True)
     avatar = CloudinaryField('image')
     
@@ -22,11 +22,13 @@ class Profile(models.Model):
         cls.objects.filter(id=id).update(avatar=value)
     
     
-class Image(models.Model):
-    user = CurrentUserField()
+class Post(models.Model):
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    text : models.TextField(null=True)
     image = CloudinaryField('image')
     name = models.CharField(max_length=120, null=True)
-    caption = models.CharField(max_length=120, null=True)
+    caption = models.TextField(max_length=120, null=True)
+    date = models.DateTimeField(timezone.now)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     like = models.ManyToManyField(User, blank=True, related_name = 'image_like')
     comment = models.TextField(null=True)
