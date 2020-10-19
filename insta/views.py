@@ -23,10 +23,10 @@ def index(request):
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=user)
-    users = Follow.follower.all()
+    avatar = Profile.objects.all()
     posts = Post.objects.filter(user=user).order_by("-date")
     
-    return render(request,'profile.html', {'user':user, 'profile':profile, 'users':users, 'posts':posts})
+    return render(request,'profile/profile.html', {'user':user, 'profile':profile, 'posts':posts, 'avatar':avatar})
 
 @login_required
 def timeline(request):

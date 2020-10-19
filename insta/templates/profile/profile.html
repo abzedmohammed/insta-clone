@@ -1,8 +1,13 @@
 {%include 'base.html'%}
+{% load static %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/photos/profile.css' %}">
+{% endblock  %}
 
 {% block content %}
 
-<div class="container">
+<div class="container-fluid text-center">
     <div class="row">
         <div class="col-12">
             <!-- Card -->
@@ -20,9 +25,26 @@
     <!-- Content -->
     <div class="card-body">
       <!-- Name -->
-      <h4 class="card-title">Anna Doe</h4>
+      <h3 class="card-title">Anna Doe</h3>
+      <a class="btn btn-sm btn-success" href="">Follow</a>
+      <hr>
+      <nav class="level is-mobile">
+        <div class="level-item has-text-center">
+          <p class="heading">Followers</p>
+          <p class="title">300</p>
+        </div>
+        <div class="level-item has-text-center">
+          <p class="heading">Following</p>
+          <p class="title">99</p>
+        </div>
+        <div class="level-item has-text-center">
+          <p class="heading">Posts</p>
+          <p class="title">1110</p>
+        </div>
+      </nav>
       <hr>
       <!-- Quotation -->
+      <h4 style="text-decoration: underline;">Bio</h4>
       <p><i class="fas fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci
       </p>
     </div>

@@ -41,7 +41,12 @@
             aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user"></i> {{ request.user.username}} </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+            
+            {% if user %}
             <a class="dropdown-item" href="{% url 'profile' user.username %}">My Account</a>
+            {% endif %}
+              
+            
             <a class="dropdown-item" href="/accounts/password_change">Change Password</a>
             <a class="dropdown-item" href="{% url 'avatar_change' %}">Change Profile</a>
             <a class="dropdown-item" href="/logout">Log Out</a>
@@ -52,7 +57,6 @@
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item avatar">
         <a class="nav-link p-0" href="#">
-          {% avatar user 35 class="rounded-circle z-depth-0" %}          
         </a>
       </li>
       {% else %}
