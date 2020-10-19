@@ -16,15 +16,21 @@
     <div class="row">
         <div class="col-md-9 col-lg-9 col-sm-9">
             <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vlDzYIIOYmM" allowfullscreen></iframe>
+              <img class="img-fluid embed-responsive-item" src="{{post.image.url}}" allowfullscreen>
             </div>
              </div>
         <div id="details" class="col-md-3 col-lg-3 col-sm-3">
             <h1>{{ post.image_name }}</h1>
-            <h2> <span class="badge badge-secondary">{{ post.user }}</span></h2>
+            <h2><small><span style="font-size: 14px;" class="text-muted">posted by,</span></small> <span class="badge badge-secondary">{{ post.user }}</span></h2>
             <h3> <span class="badge badge-info">{{ post.likes}}</span></h3>
             <h4> <span class="badge badge-success">{{ post.date }}</span></h4>
             <h5> {{ post.caption }}</h5>
+            <br>
+            <a class="btn btn-sm btn-outline-cyan" href=""><i class="fas fa-thumbs-up fa-2x">  {{ post.like }}</i></a>
+
+            <hr>
+
+            <h3 class="text-center" style="text-decoration: underline;">Comments</h3>
     </div>
 </div>
 {% endif %}
