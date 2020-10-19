@@ -1,5 +1,6 @@
 {%include 'base.html'%}
 {% load static %}
+{% load cloudinary %}
 
 {% block styles %}
   <link rel="stylesheet" href="{% static 'css/profile.css' %}">
@@ -18,8 +19,8 @@
   
     <!-- Avatar -->
     <div class="avatar mx-auto white">
-      <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" class="rounded-circle"
-        alt="woman avatar">
+      <img src="{{ profile.avatar.url }}" class="img-fluid rounded-circle"
+        alt="My Avatar">
     </div>
   
     <!-- Content -->
@@ -27,7 +28,11 @@
       <!-- Name -->
       <h2 class="card-title">{{ profile.user }}</h2>
       
-      {% if object.username == user.username %} 
+      {% if profile.location %}
+      <h5 class="card-title text-muted">Location : {{ profile.location }}</h5>
+      {% endif %}
+              
+      {% if request.user == profile.user %} 
       <h3 class="card-title">{{ profile.user.email }}</h3>
         {% else %}
       <a class="btn btn-sm btn-success" href="">Follow</a>
@@ -53,7 +58,9 @@
       <p><i class="fas fa-quote-left"></i> {{ profile.bio }}
       </p>
       <hr>
+      {% if request.user == profile.user %} 
       <a class="btn btn-outline-deep-orange" href="">Edit Profile</a>
+      {% endif %}
     </div>
   
   </div>
@@ -66,22 +73,22 @@
 
 <div class="container">
   <h2 style="text-decoration: underline;" class="text-center">My Images</h2>
-    <div class="row">      
-      {% if posts %}
-        
+  {% if posts %}
+    <div class="row">        
       {% for items in posts %}
         <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-        <a href="">
+        <a href="{% url 'singlePost' items.id %}">
           <img class="img-fluid img-thumbnail" src="{{ items.image.url }}" alt="{{ items.image_name }}">
         </a>
-        <hr>
     </div>     
     {% endfor %}
+    </div>
     {% else %}
-    <h3 class="text-center">You Have Not Posted Anything</h3>
-    <a class="btn btn-deep-purple btn-sm" href="{% url 'addImage' %}">Add Post</a>
-    {% endif %}
-  </div>
+      <h3 class="text-center">You Have Not Posted Anything</h3>
+      <div class="text-center">
+        <a class="btn btn-deep-purple btn-sm" href="{% url 'addImage' %}">Add Post</a>
+      </div>
+      {% endif %}
     <br>
 </div>
   

@@ -43,7 +43,7 @@
           <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
             
             {% if user %}
-            <a class="dropdown-item" href="{% url 'profile' user.username %}">My Account</a>
+            <a class="dropdown-item" href="{% url 'profile' request.user.username %}">My Account</a>
             {% endif %}
               
             
