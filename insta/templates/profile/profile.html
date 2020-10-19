@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block styles %}
-  <link rel="stylesheet" href="{% static 'css/photos/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock  %}
 
 {% block content %}
@@ -25,34 +25,64 @@
     <!-- Content -->
     <div class="card-body">
       <!-- Name -->
-      <h3 class="card-title">Anna Doe</h3>
+      <h2 class="card-title">{{ profile.user }}</h2>
+      
+      {% if object.username == user.username %} 
+      <h3 class="card-title">{{ profile.user.email }}</h3>
+        {% else %}
       <a class="btn btn-sm btn-success" href="">Follow</a>
+      {% endif %}
       <hr>
       <nav class="level is-mobile">
         <div class="level-item has-text-center">
           <p class="heading">Followers</p>
-          <p class="title">300</p>
+          <h3 class="title">{{ follower_count }}</h3>
         </div>
         <div class="level-item has-text-center">
           <p class="heading">Following</p>
-          <p class="title">99</p>
+          <h3 class="title">{{ following_count }}</h3>
         </div>
         <div class="level-item has-text-center">
           <p class="heading">Posts</p>
-          <p class="title">1110</p>
+          <h3 class="title">{{ post_count}}</h3>
         </div>
       </nav>
       <hr>
       <!-- Quotation -->
       <h4 style="text-decoration: underline;">Bio</h4>
-      <p><i class="fas fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci
+      <p><i class="fas fa-quote-left"></i> {{ profile.bio }}
       </p>
+      <hr>
+      <a class="btn btn-outline-deep-orange" href="">Edit Profile</a>
     </div>
   
   </div>
   <!-- Card -->
         </div>
     </div>
+</div>
+
+<br>
+
+<div class="container">
+  <h2 style="text-decoration: underline;" class="text-center">My Images</h2>
+    <div class="row">      
+      {% if posts %}
+        
+      {% for items in posts %}
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <a href="">
+          <img class="img-fluid img-thumbnail" src="{{ items.image.url }}" alt="{{ items.image_name }}">
+        </a>
+        <hr>
+    </div>     
+    {% endfor %}
+    {% else %}
+    <h3 class="text-center">You Have Not Posted Anything</h3>
+    <a class="btn btn-deep-purple btn-sm" href="{% url 'addImage' %}">Add Post</a>
+    {% endif %}
+  </div>
+    <br>
 </div>
   
 {% endblock  %}

@@ -26,7 +26,12 @@ def user_profile(request, username):
     avatar = Profile.objects.all()
     posts = Post.objects.filter(user=user).order_by("-date")
     
-    return render(request,'profile/profile.html', {'user':user, 'profile':profile, 'posts':posts, 'avatar':avatar})
+    post_count = Post.objects.filter(user=user).count()
+    follower_count = Follow.objects.filter(following=user).count()
+    following_count = Follow.objects.filter(follower=user).count()
+    
+    return render(request,'profile/profile.html', {'user':user, 'profile':profile, 'posts':posts, 'avatar':avatar, 'post_count':post_count, 
+                                                   'follower_count':follower_count, 'following_count':following_count})
 
 @login_required
 def timeline(request):
