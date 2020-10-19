@@ -12,6 +12,7 @@ urlpatterns=[
     path('add_image/', views.add_image, name='addImage'),
     path('my_timeline/', views.timeline, name='timeline'),
     path('<uuid:post_id>', views.single_post, name='singlePost'),
+    path('<uuid:post_id>/like', views.like, name='likePost'),
 ]
 
 if settings.DEBUG:

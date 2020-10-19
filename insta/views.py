@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.conf import settings 
 from django.core.mail import send_mail 
+from django.urls import reverse
 
 @login_required
 def index(request):
@@ -52,6 +53,29 @@ def add_image(request):
             return False
     
     return render(request, 'add_image.html', {'form':ImageForm,})
+
+@login_required
+def like(request,post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    current_likes = post.like
+    
+    liked = Likes.objects.filter(user=user, post=post).count()
+    
+    if not liked:
+        like = Likes.objects.create(user=user,post=post)
+        
+        current_likes = current_likes + 1
+        
+    else:
+        Likes.objects.filter(user=user,post=post).delete()
+        current_likes = current_likes - 1
+        
+    post.like = current_likes
+    post.save() 
+    
+    return HttpResponseRedirect(reverse('MainPage'))       
+     
 
 def search_results(request):
     

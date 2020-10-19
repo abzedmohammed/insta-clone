@@ -38,7 +38,7 @@
   <p class="card-text">{{ items.caption| truncatechars:17 }}</p>
 
   <!-- Linkedin -->
-  <a class="fa-lg p-2 li-ic"><i class="fas fa-thumbs-up">  <span class="text-muted">{{ items.like }}</span></i></a>
+  <a href="{% url 'likePost' items.id %}" class="fa-lg p-2 li-ic"><i class="fas fa-thumbs-up">  <span class="text-muted">{{ items.like }}</span></i></a>
   <!-- Twitter -->
   <a class="fa-lg p-2 m-2 tw-ic"><i class="fas fa-comment-dots">  <span class="text-muted">Comment</span></i></a>
   <!-- Dribbble -->
