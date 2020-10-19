@@ -78,6 +78,10 @@ class Stream(models.Model):
             stream = Stream(post=post, user=follower.follower, date=post.date, following=user)
             stream.save()
             
+class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_like')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
+            
 post_save.connect(Stream.add_post, sender=Post)
     
 
