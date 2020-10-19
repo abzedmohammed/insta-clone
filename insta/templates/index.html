@@ -25,7 +25,9 @@
       <h5 class="card-title text-muted"></h5>
   <!-- Card image -->
   <div class="view overlay">
-    <img src="{{items.image.url}}" class="img-fluid" alt="">
+    <a href="{% url 'singlePost' items.id %}">
+      <img src="{{items.image.url}}" class="img-fluid" alt="">
+    </a>
     <a href="#">
       <div class="mask rgba-white-slight"></div>
     </a>
