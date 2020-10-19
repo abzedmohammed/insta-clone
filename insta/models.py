@@ -10,8 +10,11 @@ def user_directory_path(instance, filename):
 
 
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    location = models.CharField(max_length=50, null=True, blank=True)
     bio = models.TextField(max_length=120, null=True)
     avatar = CloudinaryField('image')
+    pictures = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
     
     def __str__(self):
         return self.bio

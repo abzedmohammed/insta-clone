@@ -20,6 +20,15 @@ def index(request):
     return render(request, 'index.html', {'posts':posts})
 
 @login_required
+def user_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    profile = Profile.objects.get(user=user)
+    users = Follow.follower.all()
+    posts = Post.objects.filter(user=user).order_by("-date")
+    
+    return render(request,'profile.html', {'user':user, 'profile':profile, 'users':users, 'posts':posts})
+
+@login_required
 def timeline(request):
     user = request.user
     stream = Stream.objects.filter(user=user)
