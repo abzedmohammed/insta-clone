@@ -50,18 +50,36 @@ def single_post(request,post_id):
 
 @login_required
 def add_image(request):
-    user = request.user
+    userX = request.user
+    user = Profile.objects.get(user=request.user)
     if request.method == "POST":
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.save(commit=False)
-            data.user = user
+            data.profile = user
+            data.user = userX
             data.save()
             return redirect('/')
         else:
             return False
     
     return render(request, 'add_image.html', {'form':ImageForm,})
+
+@login_required
+def profile_form(request):
+    user = request.user
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.user = user
+            data.save()
+            return redirect('/')
+        else:
+            form = ProfileForm()
+    legend = 'Create Profile'
+    
+    return render(request, 'profile/update.html', {'form':ProfileForm, 'legend':legend})
 
 @login_required
 def like(request,post_id):

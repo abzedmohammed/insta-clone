@@ -13,6 +13,8 @@ urlpatterns=[
     path('my_timeline/', views.timeline, name='timeline'),
     path('<uuid:post_id>', views.single_post, name='singlePost'),
     path('<uuid:post_id>/like', views.like, name='likePost'),
+    path('<username>/', views.user_profile, name='profile'),
+    path('profile/create', views.profile_form, name='createProfile'),
 ]
 
 if settings.DEBUG:

@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 import uuid
 
 def user_directory_path(instance, filename):
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/{1}'.format(instance.profile.user.id, filename)
 
 
 class Profile(models.Model):
@@ -14,7 +14,6 @@ class Profile(models.Model):
     location = models.CharField(max_length=50, null=True, blank=True)
     bio = models.TextField(max_length=120, null=True)
     avatar = CloudinaryField('image')
-    pictures = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
     
     def __str__(self):
         return self.bio
@@ -28,18 +27,22 @@ class Profile(models.Model):
     @classmethod
     def update(cls, id, value):
         cls.objects.filter(id=id).update(avatar=value)
-    
+
+class Comment(models.Model):
+    comment = models.TextField(null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
+    date = models.DateTimeField(auto_now_add=True)
     
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_user')
     image = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
     image_name = models.CharField(max_length=120, null=True)
     caption = models.TextField(max_length=1000, verbose_name='Caption', null=True)
     date = models.DateTimeField(auto_now_add=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post_profile')
     like = models.IntegerField(default=0)
-    #comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='post_comment')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='post_comment', null=True)
     
     # class Meta:
     #     ordering = ['-date',]
@@ -85,11 +88,6 @@ class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_like')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
     
-class Comment(models.Model):
-    comment = models.TextField(null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_coment')
-    date = models.DateTimeField(auto_now_add=True)
             
 post_save.connect(Stream.add_post, sender=Post)
     
