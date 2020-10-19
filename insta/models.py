@@ -37,9 +37,9 @@ class Post(models.Model):
     image_name = models.CharField(max_length=120, null=True)
     caption = models.TextField(max_length=1000, verbose_name='Caption', null=True)
     date = models.DateTimeField(auto_now_add=True)
-   # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post_profile')
     like = models.IntegerField(default=0)
-   # comment = models.TextField(null=True)
+    #comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='post_comment')
     
     # class Meta:
     #     ordering = ['-date',]
@@ -84,6 +84,12 @@ class Stream(models.Model):
 class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_like')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
+    
+class Comment(models.Model):
+    comment = models.TextField(null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_coment')
+    date = models.DateTimeField(auto_now_add=True)
             
 post_save.connect(Stream.add_post, sender=Post)
     
