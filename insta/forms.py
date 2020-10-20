@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.core.files.images import get_image_dimensions
 
-class SignupForm(UserCreationForm):
+class RegisterForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
     class Meta:
         model = User

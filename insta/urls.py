@@ -9,6 +9,7 @@ urlpatterns=[
     path('search/', views.search_results, name='search_results'),
     path('logout/', views.logout, name='logout'),
     path('accounts/login', views.login, name='login'),
+    path('accounts/register', views.welcome_email, name='welcome'),
     path('add_image/', views.add_image, name='addImage'),
     path('my_timeline/', views.timeline, name='timeline'),
     path('<uuid:post_id>', views.single_post, name='singlePost'),

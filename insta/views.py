@@ -13,6 +13,12 @@ from django.conf import settings
 from django.core.mail import send_mail 
 from django.urls import reverse
 from django.db import transaction
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from .token_generator import account_activation_token
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 @login_required
 def index(request):
@@ -177,7 +183,31 @@ def search_results(request):
         message = "You haven't searched for any user"
         return render(request, 'search.html',{"message":message})
 
-# def welcome_email(request):
+def welcome_email(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            email_subject = 'Activate Your Account'
+            message = render_to_string('email/instaemail.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(email_subject, message, to=[to_email])
+            email.send()
+            return HttpResponse('We have sent you an email, please confirm your email address to complete registration')
+    else:
+        form = RegisterForm()
+    return render(request, 'django_registration/registration_form.html', {'form': form})
+
+    
+    
 #     if request.method == 'POST':
 #         username = request.POST('username')
 #         password = request.POST('password')
