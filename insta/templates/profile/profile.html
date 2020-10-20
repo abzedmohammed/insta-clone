@@ -34,8 +34,10 @@
               
       {% if request.user == profile.user %} 
       <h3 class="card-title">{{ profile.user.email }}</h3>
-        {% else %}
-      <a class="btn btn-sm btn-success" href="">Follow</a>
+        {% elif follow_status == True %}
+      <a class="btn btn-sm btn-danger" href="{% url 'follow' profile.user 0 %}">Unfollow</a>
+      {% else %}
+      <a class="btn btn-sm btn-success" href="{% url 'follow' profile.user 1 %}">Follow</a>
       {% endif %}
       <hr>
       <nav class="level is-mobile">

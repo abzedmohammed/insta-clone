@@ -30,9 +30,10 @@ def user_profile(request, username):
     post_count = Post.objects.filter(user=user).count()
     follower_count = Follow.objects.filter(following=user).count()
     following_count = Follow.objects.filter(follower=user).count()
+    follow_status = Follow.objects.filter(following=user, follower=request.user).exists()
     
     return render(request,'profile/profile.html', {'user':user, 'profile':profile, 'posts':posts, 'avatar':avatar, 'post_count':post_count, 
-                                                   'follower_count':follower_count, 'following_count':following_count})
+                                                   'follower_count':follower_count, 'following_count':following_count,'follow_status':follow_status})
 
 @login_required
 def timeline(request):
@@ -55,11 +56,11 @@ def follow(request, username, option):
     folllowing = get_object_or_404(User, username=username)
     
     try:
-        f, created = Follow.objects.get_or_create(follower=user, folllowing=folllowing)
+        f, created = Follow.objects.get_or_create(follower=user, following=folllowing)
         
         if int(option) == 0:
             f.delete()
-            Stream.objects.filter(folllowing=folllowing, user=user).all().delete()
+            Stream.objects.filter(following=folllowing, user=user).all().delete()
             
         else:
             posts = Post.objects.all().filter(user=folllowing)[:10]
@@ -69,9 +70,9 @@ def follow(request, username, option):
                     stream = Stream(post=post, user=user, date=post.date, following=folllowing)
                     stream.save()
                     
-        return HttpResponseRedirect(reverse('profile'))
+        return HttpResponseRedirect(reverse('profile', args=[username]))
     except User.DoesNotExist:
-        return HttpResponseRedirect(reverse('profile'))      
+        return HttpResponseRedirect(reverse('profile', args=[username]))      
 
 @login_required
 def single_post(request,post_id):
