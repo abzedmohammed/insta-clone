@@ -166,16 +166,16 @@ def like(request,post_id):
 
 def search_results(request):
     
-    if 'article' in request.GET and request.GET["article"]:
-        search_term = request.GET.get("article")
-        searched_articles = Article.search_by_title(search_term)
+    if 'name' in request.GET and request.GET["name"]:
+        search_term = request.GET.get("name")
+        searched_results = Post.search_by_name(search_term)
         message = f"{search_term}"
 
-        return render(request, 'all-news/search.html',{"message":message,"articles": searched_articles})
+        return render(request, 'search.html',{"message":message,"posts": searched_results})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'all-news/search.html',{"message":message})
+        return render(request, 'search.html',{"message":message})
 
 # def welcome_email(request):
 #     if request.method == 'POST':

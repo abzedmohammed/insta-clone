@@ -41,10 +41,8 @@
   <!-- Linkedin -->
   <a href="{% url 'likePost' items.id %}" class="fa-lg p-2 li-ic"><i class="fas fa-thumbs-up">  <span class="text-muted">{{ items.like }}</span></i></a>
   <!-- Twitter -->
-  <a class="fa-lg p-2 m-2 tw-ic"><i class="fas fa-comment-dots">  <span class="text-muted">Comment</span></i></a>
-  <!-- Dribbble -->
-  <a class="fa-lg p-2 m-2 fb-ic"><i class="fas fa-share-alt">  <span class="text-muted">Share</span></i></a>
-<br>
+  <a href="{% url 'singlePost' items.id %}" class="fa-lg p-2 m-2 tw-ic"><i class="fas fa-comment-dots">  <span class="text-muted">Comment</span></i></a>
+  <br>
   <a class="btn btn-outline-info btn-sm" href="{% url 'singlePost' items.id %}">Full Details</a>
 
 </div>

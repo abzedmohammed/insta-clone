@@ -49,7 +49,7 @@ class Post(models.Model):
         
     @classmethod
     def search_by_name(cls,search_term):
-        prof = cls.objects.filter(name__name__icontains=search_term)
+        prof = cls.objects.filter(image_name__name__icontains=search_term)
         return prof
         
     def delete_image(self):
