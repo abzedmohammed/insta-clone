@@ -113,6 +113,21 @@ def profile_form(request):
     return render(request, 'profile/update.html', {'form':ProfileForm, 'legend':legend})
 
 @login_required
+def profile_edit(request,username):
+    user = request.user
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.user = user
+            data.save()
+            return redirect('profile')
+        else:
+            form = ProfileForm()
+    legend = 'Edit Profile'
+    return render(request, 'profile/update.html', {'legend':legend, 'form':ProfileForm})
+
+@login_required
 def like(request,post_id):
     user = request.user
     post = Post.objects.get(id=post_id)

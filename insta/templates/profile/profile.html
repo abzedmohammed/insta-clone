@@ -61,7 +61,7 @@
       </p>
       <hr>
       {% if request.user == profile.user %} 
-      <a class="btn btn-outline-deep-orange" href="">Edit Profile</a>
+      <a class="btn btn-outline-deep-orange" href="{% url 'editProfile' profile.user %}">Edit Profile</a>
       {% endif %}
     </div>
   
@@ -74,7 +74,11 @@
 <br>
 
 <div class="container">
+  {% if request.user == profile.user %}
   <h2 style="text-decoration: underline;" class="text-center">My Images</h2>
+  {% else %}
+  <h2 style="text-decoration: underline;" class="text-center">User Images</h2>
+  {% endif %}
   {% if posts %}
     <div class="row">        
       {% for items in posts %}
