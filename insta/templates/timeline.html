@@ -49,29 +49,22 @@
             <ul class="list-unstyled list-inline font-small">
 
                 <li class="list-inline-item pr-2">
-                    <a href="#!" class="green-text"> 
+                    <a href="{% url 'likePost' items.id %}" class="green-text"> 
                         <h6 class="h6 pb-1"><i class="far fa-heart"></i> {{ items.like }}</h6>
                       </a>
                 </li>
 
                 <li class="list-inline-item pr-2">
-                    <a href="#!" class="green-text"> 
+                    <a href="{% url 'singlePost' items.id %}" class="green-text"> 
                         <h6 class="h6 pb-1"><i class="fas fa-comment-dots"></i> Comment</h6>
                       </a>            
-                </li>
-
-                <li class="list-inline-item pr-2">
-                    <a href="#!" class="green-text"> 
-                        <h6 class="h6 pb-1"><i class="fas fa-share-alt"> Share</i></h6>
-                      </a>
-              
                 </li>
 
                 </ul>
 
         </div>
   
-        <a class="btn btn-sm btn-dark">Full Post</a>
+        <a href="{% url 'singlePost' items.id %}" class="btn btn-sm btn-dark">Full Post</a>
   
       </div>
     </div>

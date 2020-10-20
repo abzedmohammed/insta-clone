@@ -16,7 +16,7 @@
   <h1 style="text-decoration: underline;">Insta Clone</h1>
 
   <form class="form-group md-form mr-auto mb-4" action="{% url 'search_results' %}">
-    <input class="form-control mr-sm-2" name="users" type="text" placeholder="Search" aria-label="Search">
+    <input class="form-control mr-sm-2" name="users" type="text" placeholder="Search For Users" aria-label="Search">
   <button class="btn btn-outline-dark btn-rounded btn-sm my-0" type="submit">Search</button>
   </form>
 <br>
@@ -38,7 +38,7 @@
     </a>
   </div>
 
-  <h5 class="indigo-text h5 mt-3">{{ items.image_name }}</h5>
+  <h5 class="h5 mt-3">{{ items.image_name }}</h5>
 
   <p class="card-text">{{ items.caption| truncatechars:17 }}</p>
 

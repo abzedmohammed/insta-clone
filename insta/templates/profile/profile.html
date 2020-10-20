@@ -59,10 +59,6 @@
       <h4 style="text-decoration: underline;">Bio</h4>
       <p><i class="fas fa-quote-left"></i> {{ profile.bio }}
       </p>
-      <hr>
-      {% if request.user == profile.user %} 
-      <a class="btn btn-outline-deep-orange" href="{% url 'editProfile' profile.user %}">Edit Profile</a>
-      {% endif %}
     </div>
   
   </div>
