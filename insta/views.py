@@ -12,6 +12,7 @@ from django.contrib.auth import logout as django_logout
 from django.conf import settings 
 from django.core.mail import send_mail 
 from django.urls import reverse
+from django.db import transaction
 
 @login_required
 def index(request):
@@ -47,6 +48,30 @@ def timeline(request):
     post_items = Post.objects.filter(id__in=group_ids).all().order_by('-date')
     
     return render(request, 'timeline.html', {'posts':posts, 'stream':stream,'post_items':post_items})
+
+@login_required
+def follow(request, username, option):
+    user = request.user
+    folllowing = get_object_or_404(User, username=username)
+    
+    try:
+        f, created = Follow.objects.get_or_create(follower=user, folllowing=folllowing)
+        
+        if int(option) == 0:
+            f.delete()
+            Stream.objects.filter(folllowing=folllowing, user=user).all().delete()
+            
+        else:
+            posts = Post.objects.all().filter(user=folllowing)[:10]
+            
+            with transaction.atomic():
+                for post in posts:
+                    stream = Stream(post=post, user=user, date=post.date, following=folllowing)
+                    stream.save()
+                    
+        return HttpResponseRedirect(reverse('profile'))
+    except User.DoesNotExist:
+        return HttpResponseRedirect(reverse('profile'))      
 
 @login_required
 def single_post(request,post_id):
