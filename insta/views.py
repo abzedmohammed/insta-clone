@@ -77,7 +77,20 @@ def follow(request, username, option):
 @login_required
 def single_post(request,post_id):
     post = get_object_or_404(Post, id=post_id)
-    return render(request, 'single_post.html', {'post':post})    
+    user = request.user
+    comments = Comment.objects.filter(id=post_id).order_by('-date')
+    
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.user = user
+            data.save()
+            return redirect('/')
+        else:
+            form = CommentForm()
+    
+    return render(request, 'single_post.html', {'post':post, 'form':CommentForm, 'comments':comments})    
 
 @login_required
 def add_image(request):

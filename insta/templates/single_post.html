@@ -29,7 +29,29 @@
 
             <hr>
 
+            <h4 class="" style="text-decoration: underline;">Make a comment...</h4>
+            <form class="form-group" method="POST"> 
+                {% csrf_token %} 
+                {{ backend_form }}
+                {{ form.as_p }} 
+                <button type="submit" class="btn btn-sm btn-outline-success">Submit</button>
+            </form>  
+
+            <hr>
+
             <h3 class="text-center" style="text-decoration: underline;">Comments</h3>
+        
+            {% for items in comments %}
+
+            <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote bq-success mb-0">
+                <h5 class="teal-text" style="text-decoration:underline;">{{items.title}}</h5>
+                <hr>
+                <p>{{items.comments}}</p>
+                <footer class="blockquote-footer">Posted By : <cite title="Source Title">{{items.feedback.username}}</cite></footer>              
+                </blockquote>                  
+                {% endfor %}
     </div>
 </div>
 {% endif %}
