@@ -166,15 +166,15 @@ def like(request,post_id):
 
 def search_results(request):
     
-    if 'name' in request.GET and request.GET["name"]:
-        search_term = request.GET.get("name")
-        searched_results = Post.search_by_name(search_term)
+    if "users" in request.GET and request.GET["users"]:
+        search_term = request.GET.get("users")
+        searched_accounts = Post.search_user(search_term)
         message = f"{search_term}"
 
-        return render(request, 'search.html',{"message":message,"posts": searched_results})
+        return render(request, 'search.html',{"message":message,"users": searched_accounts})
 
     else:
-        message = "You haven't searched for any term"
+        message = "You haven't searched for any user"
         return render(request, 'search.html',{"message":message})
 
 # def welcome_email(request):

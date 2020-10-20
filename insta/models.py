@@ -48,9 +48,9 @@ class Post(models.Model):
         self.save()
         
     @classmethod
-    def search_by_name(cls,search_term):
-        prof = cls.objects.filter(image_name__name__icontains=search_term)
-        return prof
+    def search_user(cls,search_term):
+        users = User.objects.filter(username__icontains=search_term)
+        return users
         
     def delete_image(self):
         self.delete()
