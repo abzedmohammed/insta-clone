@@ -78,13 +78,14 @@ def follow(request, username, option):
 def single_post(request,post_id):
     post = get_object_or_404(Post, id=post_id)
     user = request.user
-    comments = Comment.objects.filter(id=post_id).order_by('-date')
+    comments = Comment.objects.filter(post=post).order_by('-date')
     
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             data = form.save(commit=False)
             data.user = user
+            data.post = post
             data.save()
             return redirect('/')
         else:

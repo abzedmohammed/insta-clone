@@ -27,11 +27,6 @@ class Profile(models.Model):
     @classmethod
     def update(cls, id, value):
         cls.objects.filter(id=id).update(avatar=value)
-
-class Comment(models.Model):
-    comment = models.TextField(null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
-    date = models.DateTimeField(auto_now_add=True)
     
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -42,7 +37,6 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post_profile')
     like = models.IntegerField(default=0)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='post_comment', null=True)
     
     # class Meta:
     #     ordering = ['-date',]
@@ -87,7 +81,12 @@ class Stream(models.Model):
 class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_like')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
-    
+
+class Comment(models.Model):
+    comment = models.TextField(null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
+    date = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment')
             
 post_save.connect(Stream.add_post, sender=Post)
     

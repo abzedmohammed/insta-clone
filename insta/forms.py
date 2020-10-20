@@ -23,7 +23,7 @@ class ProfileForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ['user']
+        exclude = ['user','post']
 
     # def clean_avatar(self):
     #     avatar = self.cleaned_data['avatar']
