@@ -10,11 +10,6 @@
   <br>
 
     {% for items in post_items %}
-    <!-- displaying News articles -->
-    <div class="row">
-
-    <div class="col-xs-9 col-sm-10 col-md-9 col-lg-10">
-
         <!-- News jumbotron -->
 <div class="text-center hoverable p-4">
 
@@ -22,12 +17,12 @@
     <div class="row">
   
       <!-- Grid column -->
-      <div class="col-md-4 offset-md-1 mx-3 my-3">
+      <div class="col-md-7 offset-md-1 mx-1 my-1">
   
         <!-- Featured image -->
         <div class="view overlay">
           <img src="{{ items.image.url }}" class="img-fluid z-depth-1 img-thumbnail hoverable" alt="{{ items.user}} Avatar">
-          <a>
+          <a href="{% url 'singlePost' items.id %}">
             <div class="mask rgba-white-slight"></div>
           </a>
         </div>
@@ -36,16 +31,16 @@
       <!-- Grid column -->
   
       <!-- Grid column -->
-      <div class="col-md-7 text-md-left ml-3 mt-3">
+      <div class="col-md-3 text-md-right ml-5 mt-0">
   
         <!-- Excerpt -->
   
-        <h4 class="h4 mb-4">{{ items.image_name }}</h4>
+        <h3 class="h4 mb-1">{{ items.image_name }}</h3>
   
-        <p class="font-weight-normal">{{ items.caption }}</p>
-        <p class="font-weight-normal">by <a><strong>{{ items.user }}</strong></a>,<br> on <small>{% localtime on %}{{ items.date }}{% endlocaltime %}</small></p>
+        <p class="lead font-weight-normal">{{ items.caption }}</p>
+        <p class="lead font-weight-bolder">by <a><strong>{{ items.user }}</strong></a>,<br> on <small>{% localtime on %}{{ items.date }}{% endlocaltime %}</small></p>
 
-        <div class="rounded-bottom pt-3">
+        <div class="rounded-bottom pt-1">
             <ul class="list-unstyled list-inline font-small">
 
                 <li class="list-inline-item pr-2">
@@ -62,10 +57,7 @@
 
                 </ul>
 
-        </div>
-  
-        <a href="{% url 'singlePost' items.id %}" class="btn btn-sm btn-dark">Full Post</a>
-  
+        </div>  
       </div>
     </div>
       <!-- Grid column -->
@@ -73,12 +65,7 @@
     </div>
     <!-- Grid row -->
   
-  </div>
-  <!-- News jumbotron -->
-
-</div> 
 <hr style="color: #111;">
-<br>
 {% empty %}
 <h2 class="text-center" style="text-decoration: underline;">No Posts Available</h2>
 
