@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap4 %}
 {% include "base.html" %}
 
 {% block styles %}
@@ -11,43 +12,68 @@
     
 
     
-<div class="container-fluid">
+<div class="container">
     {% if post %}
+    
+    <h1 style="text-decoration: underline;" class="text-center">{{ post.image_name }}</h1>
+    <p class="lead text-center">{{ post.caption }}</p>
+
     <div class="row">
-        <div class="col-md-9 col-lg-9 col-sm-9">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
             <div class="embed-responsive embed-responsive-16by9">
-              <img class="img-fluid embed-responsive-item" src="{{post.image.url}}" allowfullscreen>
+              <img class="img-fluid embed-responsive-item" src="{{post.image.url}}">
             </div>
              </div>
-        <div id="details" class="col-md-3 col-lg-3 col-sm-3">
-            <h1>{{ post.image_name }}</h1>
-            <h2><small><span style="font-size: 14px;" class="text-muted">posted by,</span></small> <span class="badge badge-secondary">{{ post.user }}</span></h2>
-            <h4> <span class="badge badge-success">{{ post.date }}</span></h4>
-            <h5> {{ post.caption }}</h5>
+            </div>
             <br>
-            <a class="btn btn-sm btn-outline-cyan" href="{% url 'likePost' post.id %}"><i class="fas fa-thumbs-up fa-2x">  {{ post.like }}</i></a>
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-6 col-sm-6 col-lg-6">
+                        <div style="max-width: 100%;">
+                            <div class="row no-gutters">
+                              <div class="col-md-1 mt-3">                                  
+                                <img src="{{ post.profile.avatar.url }}" class="card-img img-fluid rounded-circle" alt="avatar">
+                              </div>
+                              <div class="col-md-8">
+                                <div class="card-body">
+                                  <h3 class="card-title">{{ post.user }}</h3>
+                                
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <a href="{% url 'likePost' post.id %}"><i class="fas fa-thumbs-up fa-2x">  {{ post.like }} Likes</i></a>
+                          <p class="card-text lead"><small class="text-muted">Posted {{ post.date| timesince }} ago</small></p>
+                          <h4 class="" style="text-decoration: underline;">Write a comment...</h4>
+                          <form class="form-group" method="POST"> 
+                              {% csrf_token %} 
+                              {{ backend_form }}
+                              {% bootstrap_form form %} 
+                              <button type="submit" class="btn btn-sm btn-outline-success">Submit</button>
+                          </form>  
+                      </div>
+                    
 
-            <hr>
 
-            <h4 class="" style="text-decoration: underline;">Make a comment...</h4>
-            <form class="form-group" method="POST"> 
-                {% csrf_token %} 
-                {{ backend_form }}
-                {{ form.as_p }} 
-                <button type="submit" class="btn btn-sm btn-outline-success">Submit</button>
-            </form>  
 
-            <hr>
-
-            <h3 class="text-center" style="text-decoration: underline;">Comments</h3>
+                      <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h3 class="text-center" style="text-decoration: underline;">Comments</h3>
         
-            {% for items in comments %}
-                <blockquote class="blockquote bq-success">
-                <hr>
-                <p>{{items.comment}}</p>
-                <footer class="blockquote-footer">Posted By : <cite title="Source Title">{{items.user}}</cite></footer>              
-                </blockquote>                  
-                {% endfor %}
+                        {% for items in comments %}
+                            <blockquote class="blockquote bq-success">
+                            <hr>
+                            <p>{{items.comment}}</p>
+                            <footer class="blockquote-footer">Posted By : <cite title="Source Title">{{items.user}}</cite></footer>              
+                            <p class="footer"><cite title="Source Title">{{ items.date| timesince }} ago</cite></p>              
+                            </blockquote>                  
+                            {% endfor %}
+                      </div>
+                  </div>
+              </div>
+           
+            
+
+         
 {% endif %}
 </div>
 {% endblock  %}

@@ -93,7 +93,8 @@ def single_post(request,post_id):
             data.user = user
             data.post = post
             data.save()
-            return redirect('/')
+            return HttpResponseRedirect(reverse('singlePost', args=[post_id]))
+            #return redirect('singlePost')
         else:
             form = CommentForm()
     
