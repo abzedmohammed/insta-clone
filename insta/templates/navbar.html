@@ -1,5 +1,4 @@
-
-<!--Navbar -->
+ 
 <nav class="mb-1 navbar navbar-expand-lg navbar-light dark-color">
   <a class="navbar-brand" href="/"> <i class="fab fa-instagram"></i>  Insta Clone</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
@@ -25,26 +24,19 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
           {% if user %}
           <a class="dropdown-item" href="{% url 'profile' request.user.username %}">My Account</a>
-          {% endif %}
-            
-          
+          {% endif %} 
           <a class="dropdown-item" href="/accounts/password_change">Change Password</a>
           <a class="dropdown-item" href="/logout">Log Out</a>
         </div>
       </li>
-    
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/register">Create Account</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
-  <ul class="navbar-nav ml-auto nav-flex-icons">
-    {% else %}
-    <li class="nav-item">
-      <a class="nav-link" href="/accounts/login">Login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/accounts/register">Create Account</a>
-    </li>
-    {% endif %}
-  </ul>
-</div>
 </nav>
-<!--/.Navbar -->
