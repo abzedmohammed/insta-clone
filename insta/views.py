@@ -137,17 +137,19 @@ def profile_form(request,username):
 
 @login_required
 def profile_edit(request,username):
-    user = request.user
-    profile_user = get_object_or_404(User, username=username)
+    user = get_object_or_404(User, username=username)
+    profile = user.profile
+    form = EditProfileForm(instance=profile)
+    
     if request.method == "POST":
-        form = EditProfileForm(request.POST, request.FILES, instance=profile_user)
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             data = form.save(commit=False)
             data.user = user
             data.save()
             return HttpResponseRedirect(reverse('profile', args=[username]))
         else:
-            form = EditProfileForm()
+            form = EditProfileForm(instance=profile)
     legend = 'Edit Profile'
     return render(request, 'profile/update.html', {'legend':legend, 'form':ProfileForm})
 
