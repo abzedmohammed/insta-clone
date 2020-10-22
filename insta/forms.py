@@ -20,6 +20,11 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         exclude = ['user']
         
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['user']
+        
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

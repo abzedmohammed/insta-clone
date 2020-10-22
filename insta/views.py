@@ -118,33 +118,36 @@ def add_image(request):
     return render(request, 'add_image.html', {'form':ImageForm,})
 
 @login_required
-def profile_form(request):
-    user = request.user
+def profile_form(request,username):
+    userX = request.user
+    user = get_object_or_404(User, username=username)
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.save(commit=False)
-            data.user = user
+            data.user = userX
             data.save()
-            return redirect('/')
+            return HttpResponseRedirect(reverse('MainPage'))
         else:
             form = ProfileForm()
     legend = 'Create Profile'
     
-    return render(request, 'profile/update.html', {'form':ProfileForm, 'legend':legend})
+    return render(request, 'profile/update.html', {'form':ProfileForm, 'legend':legend, 'user':user, 
+                                                   'userX':userX})
 
 @login_required
 def profile_edit(request,username):
     user = request.user
+    profile_user = get_object_or_404(User, username=username)
     if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES)
+        form = EditProfileForm(request.POST, request.FILES, instance=profile_user)
         if form.is_valid():
             data = form.save(commit=False)
             data.user = user
             data.save()
-            return redirect('profile')
+            return HttpResponseRedirect(reverse('profile', args=[username]))
         else:
-            form = ProfileForm()
+            form = EditProfileForm()
     legend = 'Edit Profile'
     return render(request, 'profile/update.html', {'legend':legend, 'form':ProfileForm})
 
