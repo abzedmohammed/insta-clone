@@ -25,7 +25,10 @@
     }
 } */
 
-.container{
+.profile img{
+    width: 60px;
+    height: 60px;
+    object-fit: fill;
 }
 
 .profile>h4 a{

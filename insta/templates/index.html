@@ -27,7 +27,7 @@
 
         {% for items in posts %}
         <div class="row mb-2 profile">
-          <img style="float: left;" class="img-fluid rounded-circle" src="{{ items.profile.avatar.url }}" width="65" alt="avatar">
+          <img style="float: left;" class="img-fluid rounded-circle" src="{{ items.profile.avatar.url }}" alt="avatar">
           <h4 style="margin-left: 10px;"><strong><a href="{% url 'profile' items.profile.user %}"><span>{{ items.user }}</span></a></strong><br><small>
             <span class="text-muted">{{ items.date| timesince }} ago..</span>
           </small></h4>

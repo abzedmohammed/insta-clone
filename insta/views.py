@@ -94,7 +94,7 @@ def single_post(request,post_id):
             data.profile = profile
             data.post = post
             data.save()
-            return HttpResponseRedirect(reverse('singlePost', args=[post_id]))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             #return redirect('singlePost')
         else:
             form = CommentForm()
@@ -174,7 +174,7 @@ def like(request,post_id):
     post.like = current_likes
     post.save() 
     
-    return HttpResponseRedirect(reverse('MainPage'))       
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))      
      
 
 def search_results(request):
