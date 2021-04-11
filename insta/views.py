@@ -84,13 +84,14 @@ def follow(request, username, option):
 def single_post(request,post_id):
     post = get_object_or_404(Post, id=post_id)
     user = request.user
+    profile = get_object_or_404(Profile, user=user)
     comments = Comment.objects.filter(post=post).order_by('-date')
     
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             data = form.save(commit=False)
-            data.user = user
+            data.profile = profile
             data.post = post
             data.save()
             return HttpResponseRedirect(reverse('singlePost', args=[post_id]))

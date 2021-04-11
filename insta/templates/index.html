@@ -5,7 +5,8 @@
 
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/main.css' %}">  
+<link rel="stylesheet" href="{% static 'css/main.css' %}"> 
+ 
 {% endblock  %}
   
 
@@ -13,65 +14,75 @@
 
 <div class="container">
 
-  <h1 style="text-decoration: underline;">Insta Clone</h1>
-
   <form class="form-group md-form mr-auto mb-4" action="{% url 'search_results' %}">
     <input class="form-control mr-sm-2" name="users" type="text" placeholder="Search For Users" aria-label="Search">
   <button class="btn btn-outline-dark btn-rounded btn-sm my-0" type="submit">Search</button>
   </form>
 <br>
   <!-- Jumbotron -->
-  {% for items in posts %}
-  <div class="row mb-2">
-    <img style="float: left;" class="img-fluid rounded-circle" src="{{ items.profile.avatar.url }}" width="95" alt="avatar">
-    <h3 style="margin-left: 10px;"><strong><a href="{% url 'profile' items.profile.user %}"><span>{{ items.user }}</span></a></strong><br><small>
-      <span class="text-muted">{{ items.date| timesince }} ago..</span>
-    </small></h3>
+
+  <div class="row">
+    <div class="col-md-2"></div>
+      <div class="col-md-8">
+
+        {% for items in posts %}
+        <div class="row mb-2 profile">
+          <img style="float: left;" class="img-fluid rounded-circle" src="{{ items.profile.avatar.url }}" width="65" alt="avatar">
+          <h4 style="margin-left: 10px;"><strong><a href="{% url 'profile' items.profile.user %}"><span>{{ items.user }}</span></a></strong><br><small>
+            <span class="text-muted">{{ items.date| timesince }} ago..</span>
+          </small></h4>
+        </div>
+      
+        <div>
+          <div class="view overlay">    
+            <img src="{{items.image.url}}" class="img-fluid" alt="{{ items.image_name }}">
+          <a href="{% url 'singlePost' items.id %}">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+      
+        <h4 class="h4 mt-3">{{ items.image_name }}</h4>
+      
+        <p class="lead card-text">{{ items.caption }}</p>
+      
+        <!-- Linkedin -->
+        <a href="{% url 'likePost' items.id %}" class="fa-lg p-2 li-ic"><i class="far fa-heart" style="color: black;">  <span class="text-muted">{{ items.like }}</span></i></a>
+        <!-- Twitter -->
+        <a href="{% url 'singlePost' items.id %}" class="fa-lg p-2 m-2 tw-ic"><i class="fas fa-comment" style="color: black;">  <span class="text-muted">Comment</span></i></a>
+        <br>
+        <a class="btn btn-outline-info btn-sm" href="{% url 'singlePost' items.id %}">View Image</a>
+
+        <hr>
+        <br>
+        {% empty %}
+        <h2 class="text-center" style="text-decoration: underline;">No Posts Available</h2>
+
+        {% endfor %}
+      
+      </div>
+
+      </div>
+      <div class="col-md-2"></div>
   </div>
 
-  <div>
-    <div class="view overlay">    
-      <img src="{{items.image.url}}" class="img-fluid" alt="{{ items.image_name }}">
-    <a href="{% url 'singlePost' items.id %}">
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  </div>
 
-  <h4 class="h4 mt-3">{{ items.image_name }}</h4>
 
-  <p class="lead card-text">{{ items.caption| truncatechars:17 }}</p>
-
-  <!-- Linkedin -->
-  <a href="{% url 'likePost' items.id %}" class="fa-lg p-2 li-ic"><i class="fas fa-thumbs-up">  <span class="text-muted">{{ items.like }}</span></i></a>
-  <!-- Twitter -->
-  <a href="{% url 'singlePost' items.id %}" class="fa-lg p-2 m-2 tw-ic"><i class="fas fa-comment-dots">  <span class="text-muted">Comment</span></i></a>
-  <br>
-  <a class="btn btn-outline-info btn-sm" href="{% url 'singlePost' items.id %}">Full Details</a>
-
-</div>
-<hr>
-<br>
-{% empty %}
-<h2 class="text-center" style="text-decoration: underline;">No Posts Available</h2>
-
-{% endfor %}
 <!-- Jumbotron -->
 
 <br>
 <br>
  
 </div>
+</div>
 
-<!-- Footer   -->
-<footer class="page-footer font-small special-color-dark pt-4">
+<footer class="page-footerk font-small color-dark pt-4">
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">Copyright (c) 2020
+  <div class="footer-copyright text-dark text-center py-3">Copyright (c) 2020
     <a href="https://github.com/Abzed" target="_blank"> Abzed Abdul Mohammed</a>
   </div>
   <!-- Copyright -->
 
 </footer>
-<!-- Footer -->
 
   {% endblock %}
       

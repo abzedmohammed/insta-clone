@@ -31,7 +31,7 @@ class Profile(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_user')
-    image = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
+    image = CloudinaryField('image')
     image_name = models.CharField(max_length=120, null=True)
     caption = models.TextField(max_length=1000, verbose_name='Caption', null=True)
     date = models.DateTimeField(auto_now_add=True)
@@ -84,7 +84,7 @@ class Likes(models.Model):
 
 class Comment(models.Model):
     comment = models.TextField(null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='user_comment')
     date = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment')
             

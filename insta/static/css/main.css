@@ -24,3 +24,24 @@
         height: auto;
     }
 } */
+
+.container{
+}
+
+.profile>h4 a{
+    color: black;
+}
+
+.profile>h4 a:hover{
+    color: #17a2b8;
+}
+
+.overlay img{
+    object-fit: fill;
+    height: 400px;
+    width: 100%;
+}
+
+.footer-copyright a{
+    color: black;
+}

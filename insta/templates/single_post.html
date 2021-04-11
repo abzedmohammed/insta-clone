@@ -3,7 +3,7 @@
 {% include "base.html" %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/movie.css' %}">
+<link rel="stylesheet" href="{% static 'css/posts.css' %}">
 {% endblock  %}
 
 {% block content %}
@@ -28,21 +28,21 @@
             <br>
               <div class="container">
                   <div class="row">
-                      <div class="col-md-6 col-sm-6 col-lg-6">
+                      <div class="col-md-5 col-sm-5 col-lg-5">
                         <div style="max-width: 100%;">
                             <div class="row no-gutters">
-                              <div class="col-md-1 mt-3">                                  
-                                <img src="{{ post.profile.avatar.url }}" class="card-img img-fluid rounded-circle" alt="avatar">
+                              <div class="col-md-2 mt-3">                                  
+                                <img src="{{ post.profile.avatar.url }}" class="card-img img-fluid rounded-circle" alt="avatar" width="120">
                               </div>
-                              <div class="col-md-8">
-                                <div class="card-body">
-                                  <h3 class="card-title">{{ post.user }}</h3>
+                              <div class="col-md-7">
+                                <div class="card-body">                                  
                                 
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <a href="{% url 'likePost' post.id %}"><i class="fas fa-thumbs-up fa-2x">  {{ post.like }} Likes</i></a>
+                          <h3 class="card-title">{{ post.user }}</h3>
+                          <a href="{% url 'likePost' post.id %}"><i class="far fa-heart fa-2x" style="color:black;">  {{ post.like }}</i></a>
                           <p class="card-text lead"><small class="text-muted">Posted {{ post.date| timesince }} ago</small></p>
                           <h4 class="" style="text-decoration: underline;">Write a comment...</h4>
                           <form class="form-group" method="POST"> 
@@ -52,20 +52,21 @@
                               <button type="submit" class="btn btn-sm btn-outline-success">Submit</button>
                           </form>  
                       </div>
-                    
 
+                      <div class="col-md-2 col-sm-2 col-lg-2"></div>
 
-
-                      <div class="col-md-6 col-sm-6 col-lg-6">
+                      <div class="col-md-5 col-sm-5 col-lg-5">
                         <h3 class="text-center" style="text-decoration: underline;">Comments</h3>
         
                         {% for items in comments %}
-                            <blockquote class="blockquote bq-success">
-                            <hr>
-                            <p>{{items.comment}}</p>
-                            <footer class="blockquote-footer">Posted By : <cite title="Source Title">{{items.user}}</cite></footer>              
-                            <p class="footer"><cite title="Source Title">{{ items.date| timesince }} ago</cite></p>              
-                            </blockquote>                  
+                           <div class="media">
+                                  <img class="d-flex img-fluid rounded-circle avatar z-depth-1-half mr-3" src="{{ items.profile.avatar.url }}"  alt="Avatar">
+                                  <div class="media-body">
+                                    <h5 class="mt-0 font-weight-bold blue-text">{{ items.profile.user.first_name }} {{ items.profile.user.last_name }}</h5>
+                                  <span style="color: #111;"> {{ items.comment }}</span>
+                                    <p class="text-muted">{{ items.date| timesince }} ago...</p>
+                                  </div>
+                                </div>
                             {% endfor %}
                       </div>
                   </div>
