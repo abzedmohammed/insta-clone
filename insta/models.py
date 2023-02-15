@@ -13,7 +13,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     location = models.CharField(max_length=50, null=True, blank=True)
     bio = models.TextField(max_length=120, null=True)
-    avatar = CloudinaryField('image')
+    avatar = CloudinaryField('image', folder='instaclone')
     
     def __str__(self):
         return self.bio
@@ -31,7 +31,7 @@ class Profile(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_user')
-    image = CloudinaryField('image')
+    image = CloudinaryField('image', folder='instaclone')
     image_name = models.CharField(max_length=120, null=True)
     caption = models.TextField(max_length=1000, verbose_name='Caption', null=True)
     date = models.DateTimeField(auto_now_add=True)

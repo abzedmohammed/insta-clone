@@ -20,11 +20,12 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-@login_required
+
 def index(request):
     posts = Post.objects.all().filter(date__lte=timezone.now()).order_by('-date')
     
     return render(request, 'index.html', {'posts':posts})
+    # return HttpResponse("Welcome")
 
 @login_required
 def user_profile(request, username):
@@ -80,7 +81,7 @@ def follow(request, username, option):
     except User.DoesNotExist:
         return HttpResponseRedirect(reverse('profile', args=[username]))      
 
-@login_required
+
 def single_post(request,post_id):
     post = get_object_or_404(Post, id=post_id)
     user = request.user
@@ -237,14 +238,14 @@ def search_results(request):
 #     return render(request, 'django_registration/registration_form.html', {'form': form})
 
 def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    username = request.POST.get('username')
+    password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
         return redirect(request,'/')
     
-    return render(request, '/django_registration/login.html')
+    return render(request, 'registration/login.html')
         
 @login_required
 def logout(request):

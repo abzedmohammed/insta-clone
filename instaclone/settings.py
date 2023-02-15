@@ -24,23 +24,23 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 
-MODE=config("MODE", default="dev")
+MODE = config("MODE")
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = config('G_MAIL')
-EMAIL_HOST_PASSWORD = config('G_PASSWORD')
+EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 cloudinary.config( 
-  cloud_name = config('CLOUD_NAME'), 
+  cloud_name = config('CLOUD_NAME'),
   api_key = config('CLOUD_API'),
   api_secret = config('API_SECRET'),
 )
-
 # development
 if config('MODE')=="dev":
    DATABASES = {
@@ -49,7 +49,7 @@ if config('MODE')=="dev":
            'NAME': config('DB_NAME'),
            'USER': config('DB_USER'),
            'PASSWORD': config('DB_PASSWORD'),
-           'HOST': config('DB_HOST'),
+           'HOST': config('AWS_DB_HOST'),
            'PORT': '',
        }
        
@@ -57,15 +57,20 @@ if config('MODE')=="dev":
 # production
 else:
    DATABASES = {
-       'default': dj_database_url.config(
-           default=config('DATABASE_URL')
-       )
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('AWS_DB_HOST'),
+           'PORT': '',
+       }
    }
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
