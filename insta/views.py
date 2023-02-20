@@ -81,7 +81,7 @@ def follow(request, username, option):
     except User.DoesNotExist:
         return HttpResponseRedirect(reverse('profile', args=[username]))      
 
-
+@login_required
 def single_post(request,post_id):
     post = get_object_or_404(Post, id=post_id)
     user = request.user
